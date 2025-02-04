@@ -58,13 +58,22 @@ const addGuessedLetter = useCallback((letter: string) => {
       alignItems: "center"
     }}>
 
-      <div style={{ fontSize: "3rem", textAlign: "center", fontWeight : "bold" } }>  HangMan Game </div>
+      <div style={{ fontSize: "3rem", textAlign: "center", fontWeight : "bold" } } >
+        HangMan Game
+         
+         </div>
       
       <HangManDraw  numberOfGuesses={incorretLetters.length} />
       <HangManWord guessedLetters={guessedLetters} wordToGuess={wordToGuess}/>
 
+      <div style={{ fontSize: "2rem", fontWeight: "bold", marginTop: "10px", color: isWinner ? "green" : isLoser ? "red" : "black" }}>
+        {isWinner && "🎉 Winner - Refresh to try again "}
+        {isLoser && "❌ Loser - Refresh to try again"}
+      </div>
+
       <div style={{ alignSelf: "stretch"}} >
       <Keyboard 
+        disabled={isWinner || isLoser}
         activeLetter={guessedLetters.filter(letter => wordToGuess.includes(letter))}
         inactiveLetters={incorretLetters} 
         addGuessedLetter={addGuessedLetter}/>
