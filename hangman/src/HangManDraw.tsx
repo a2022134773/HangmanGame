@@ -79,10 +79,16 @@ const LEFT_LEG = (
 }}></div>
 )
 
+const BODY_PARTS = [HEAD, BODY, RIGHT_ARM, LEFT_ARM, RIGHT_LEG, LEFT_LEG]
 
+type HangManDrawProps = {
+    numberOfGuesses: number
+}
 
-export function HangManDraw() {
+export function HangManDraw({ numberOfGuesses }: HangManDrawProps) {
     return <div style={{ position: "relative"}} >
+
+        {BODY_PARTS.slice(0, numberOfGuesses)}
 
         <div 
         style={{ 
