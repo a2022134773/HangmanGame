@@ -48,6 +48,9 @@ const addGuessedLetter = useCallback((letter: string) => {
   
     },[guessedLetters])
 
+
+    //useEffect(() => {},[])
+
   return <div 
     style={{
       maxWidth: "800px",
@@ -64,7 +67,7 @@ const addGuessedLetter = useCallback((letter: string) => {
          </div>
       
       <HangManDraw  numberOfGuesses={incorretLetters.length} />
-      <HangManWord guessedLetters={guessedLetters} wordToGuess={wordToGuess}/>
+      <HangManWord  reveal={isLoser} guessedLetters={guessedLetters} wordToGuess={wordToGuess}/>
 
       <div style={{ fontSize: "2rem", fontWeight: "bold", marginTop: "10px", color: isWinner ? "green" : isLoser ? "red" : "black" }}>
         {isWinner && "🎉 Winner - Refresh to try again "}
