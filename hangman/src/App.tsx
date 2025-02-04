@@ -6,9 +6,12 @@ import { Keyboard } from "./Keyboard"
 
 function App() {
 
-const [wordToGuess,setWordToGuess] = useState(() => {
-  return words[Math.floor(Math.random() * words.length)]
-})
+  function getword(){
+    return words[Math.floor(Math.random() * words.length)]
+
+  }
+
+const [wordToGuess,setWordToGuess] = useState(getword)
 
 const [guessedLetters, setGuessedLetters] = useState<string[]>([])
   
@@ -49,7 +52,26 @@ const addGuessedLetter = useCallback((letter: string) => {
     },[guessedLetters])
 
 
-    //useEffect(() => {},[])
+    useEffect(() => {
+
+      const handler = (e: KeyboardEvent) => {
+        const key = e.key
+  
+        if(key !== "Enter") return
+  
+        e.preventDefault()
+        setGuessedLetters([])
+        setWordToGuess(getword())
+      }
+      
+      document.addEventListener("keypress", handler)
+  
+      return () => {
+        document.removeEventListener("keypress", handler)
+      }
+
+
+    },[])
 
   return <div 
     style={{
@@ -70,8 +92,8 @@ const addGuessedLetter = useCallback((letter: string) => {
       <HangManWord  reveal={isLoser} guessedLetters={guessedLetters} wordToGuess={wordToGuess}/>
 
       <div style={{ fontSize: "2rem", fontWeight: "bold", marginTop: "10px", color: isWinner ? "green" : isLoser ? "red" : "black" }}>
-        {isWinner && "🎉 Winner - Refresh to try again "}
-        {isLoser && "❌ Loser - Refresh to try again"}
+        {isWinner && "🎉 Winner - Press ENTER to try again "}
+        {isLoser && "❌ Loser - Press ENTER to try again"}
       </div>
 
       <div style={{ alignSelf: "stretch"}} >
